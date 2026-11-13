@@ -12,7 +12,7 @@ goals without exhausting the power supply).
 | File | Purpose |
 |---|---|
 | `FlightTimeModel.py` | Core model: the `Drone` class (propeller, motor, ESC, and battery chain). |
-| `FlightTimeModel_runcase.ipynb` | Runs the mission for one fixed vehicle (MTOW 1.839 kg) and prints a per-segment table. |
+| `FlightTimeModel_runcase.ipynb` | Runs the mission for one fixed vehicle (MTOW 1.839 kg and TOW 1.50 kg) and prints a per-segment table. |
 | `WeightSweep.ipynb` | Sweeps vehicle weight, finds the maximum weight that completes the mission on the usable battery capacity, and plots mission charge vs. weight. |
 | `requirements.txt` | Python dependencies. |
 
@@ -64,7 +64,7 @@ propeller data table (values then clamp to the table ends).
 ```python
 from FlightTimeModel import Drone
 
-drone = Drone(weight_kg=1.839)            # total vehicle mass (MTOW)
+drone = Drone(weight_kg=1.50)            # total vehicle mass (TOW) OR 1.839 kg for MTOW
 drone.operating_point(twr=1.0)            # dict of RPM, throttle, currents, power
 drone.segment(twr=1.0, duration_s=60)     # operating point + charge/energy used
 drone.run_profile(mission)                # mission = [(label, twr, seconds), ...]
@@ -91,8 +91,9 @@ with a 90 degree yaw, slow landing):
 ## Results (as saved in the notebooks)
 
 - At MTOW **1.839 kg** the 222 s mission uses **1.759 Ah**, about 80% of the 2.2 Ah pack, which is right at the usable limit (margin 0.001 Ah).
-- Hover current is about 28.6 A at about 5595 RPM and 70.8% throttle; hover endurance on usable capacity is about 3.7 min.
-- Peak per-arm currents at that weight: 11.14 A (ESC to motor), 8.47 A (battery to ESC).
+- Chosen TOW is **1.50 kg**, which uses **1.238 Ah**, about 56% of the 2.2 Ah pack.
+- Hover current is about 20.13 A at about 5091 RPM and 61.4% throttle; hover endurance on usable capacity is about 5.2 min.
+- Peak per-arm currents at that weight: 9.04 A (ESC to motor), 5.93 A (battery to ESC).
 - In the sweep, weights of about 2.6 kg and above are not flyable (throttle would exceed 100%).
 
 ## Limitations and notes
@@ -101,10 +102,3 @@ with a 90 degree yaw, slow landing):
 - Battery cell voltage is constant, so there is no discharge-curve model.
 - Control-lag and motor transients are ignored.
 - Prop data tables cover roughly 2397 to 6540 RPM.
-
-### Items worth reviewing
-
-These were left exactly as in the original code:
-
-- `PROP_CT[2]` (RPM 2972) is `0.105`, while its neighbors are about 0.14. This looks like a possible typo (e.g. 0.1405). It only affects results if the operating RPM falls near that point, which the current mission does not.
-- `endurance_s()` prints its result and returns `None` (the trailing `pass`), so the value cannot be used programmatically.
