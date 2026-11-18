@@ -91,9 +91,9 @@ with a 90 degree yaw, slow landing):
 ## Results (as saved in the notebooks)
 
 - At MTOW **1.839 kg** the 222 s mission uses **1.759 Ah**, about 80% of the 2.2 Ah pack, which is right at the usable limit (margin 0.001 Ah).
-- Chosen TOW is **0.85578 kg**, which uses **1.238 Ah**, about 56% of the 2.2 Ah pack.
-- Hover current is about 20.13 A at about 5091 RPM and 61.4% throttle; hover endurance on usable capacity is about 5.2 min.
-- Peak per-arm currents at that weight: 9.04 A (ESC to motor), 5.93 A (battery to ESC).
+- Chosen TOW is **0.85578 kg**, which uses **0.498 Ah**, about 23% of the 2.2 Ah pack.
+- Hover current is about 8.08 A at about 3910 RPM and 42.8% throttle; hover endurance on usable capacity is about 13.0 min.
+- Peak per-arm currents at that weight: 5.17 A (ESC to motor), 2.35 A (battery to ESC).
 - In the sweep, weights of about 2.6 kg and above are not flyable (throttle would exceed 100%).
 
 ## Limitations and notes
