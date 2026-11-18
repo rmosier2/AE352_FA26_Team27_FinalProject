@@ -12,7 +12,7 @@ goals without exhausting the power supply).
 | File | Purpose |
 |---|---|
 | `FlightTimeModel.py` | Core model: the `Drone` class (propeller, motor, ESC, and battery chain). |
-| `FlightTimeModel_runcase.ipynb` | Runs the mission for one fixed vehicle (MTOW 1.839 kg and TOW 1.50 kg) and prints a per-segment table. |
+| `FlightTimeModel_runcase.ipynb` | Runs the mission for one fixed vehicle (MTOW 1.839 kg and TOW 0.85578 kg) and prints a per-segment table. |
 | `WeightSweep.ipynb` | Sweeps vehicle weight, finds the maximum weight that completes the mission on the usable battery capacity, and plots mission charge vs. weight. |
 | `requirements.txt` | Python dependencies. |
 
@@ -64,7 +64,7 @@ propeller data table (values then clamp to the table ends).
 ```python
 from FlightTimeModel import Drone
 
-drone = Drone(weight_kg=1.50)            # total vehicle mass (TOW) OR 1.839 kg for MTOW
+drone = Drone(weight_kg=0.85578)            # total vehicle mass (TOW) OR 1.839 kg for MTOW
 drone.operating_point(twr=1.0)            # dict of RPM, throttle, currents, power
 drone.segment(twr=1.0, duration_s=60)     # operating point + charge/energy used
 drone.run_profile(mission)                # mission = [(label, twr, seconds), ...]
@@ -91,7 +91,7 @@ with a 90 degree yaw, slow landing):
 ## Results (as saved in the notebooks)
 
 - At MTOW **1.839 kg** the 222 s mission uses **1.759 Ah**, about 80% of the 2.2 Ah pack, which is right at the usable limit (margin 0.001 Ah).
-- Chosen TOW is **1.50 kg**, which uses **1.238 Ah**, about 56% of the 2.2 Ah pack.
+- Chosen TOW is **0.85578 kg**, which uses **1.238 Ah**, about 56% of the 2.2 Ah pack.
 - Hover current is about 20.13 A at about 5091 RPM and 61.4% throttle; hover endurance on usable capacity is about 5.2 min.
 - Peak per-arm currents at that weight: 9.04 A (ESC to motor), 5.93 A (battery to ESC).
 - In the sweep, weights of about 2.6 kg and above are not flyable (throttle would exceed 100%).
